@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploying using AWS
+    name: Terraform Validate
     runs-on: ubuntu-latest
 
     steps:
