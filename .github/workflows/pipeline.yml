@@ -4,10 +4,10 @@ on:
     branches:
       - main
 
-# jobs:
-#   deploy:
-#     name: Deploying using AWS
-#     runs-on: ubuntu-latest
+jobs:
+  deploy:
+    name: Deploying using AWS
+    runs-on: ubuntu-latest
 
 #     steps:
 #         - name: Checkout
