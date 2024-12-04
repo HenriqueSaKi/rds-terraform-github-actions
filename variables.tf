@@ -1,3 +1,7 @@
+variable "aws_region" {
+  default = "us-east-1"
+}
+
 variable "db_username" {
   description = "Username for the RDS instance"
   type        = string

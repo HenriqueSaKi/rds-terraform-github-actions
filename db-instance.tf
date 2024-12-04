@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
 resource "aws_db_instance" "rds_postgresql" {
   identifier = "rds-lanchoente-tf"
   allocated_storage    = 20
@@ -20,25 +16,5 @@ resource "aws_db_instance" "rds_postgresql" {
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   tags = {
     Name = "Lanchonete-RDS"
-  }
-}
-
-resource "aws_security_group" "db_sg" {
-  name_prefix = "rds-sg-"
-  description = "Allow database access"
-
-  ingress {
-    description = "Allow access from ECS tasks"
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"] # Modifique conforme sua configuração de VPC
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 }
