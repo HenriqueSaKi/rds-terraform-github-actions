@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: Terraform Deploy
+    name: Build Amazon RDS 
     runs-on: ubuntu-latest
 
     steps:
@@ -25,22 +25,11 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.6
-      
-      - name: Clean Terraform Cache
-        run: rm -rf .terraform/ && rm -rf .terraform.lock.hcl
 
-      # Validate Terraform configuration
-      - name: Terraform Validate
-        run: terraform validate
-
-      # - name: Terraform Init
-      #   run: terraform init
-
-      # - name: Terraform Format
-      #   run: terraform fmt
-
-      # - name: Terraform Plan
-      #   run: terraform plan
-
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve
+      # - name: Terraform Execution
+      #   run: |
+      #     terraform init
+      #     terraform validate
+      #     terraform plan
+      #     terraform apply -auto-approve
+        
