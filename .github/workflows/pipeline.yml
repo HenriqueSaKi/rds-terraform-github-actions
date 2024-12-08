@@ -6,39 +6,34 @@ on:
 
 jobs:
   deploy:
-    name: Terraform Deploy
+    name: Build Amazon RDS
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Set up Terraform
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.6
 
-      # Validate Terraform configuration
-      - name: Terraform Validate
-        run: terraform validate
+      - name: Terraform Execution
+        run: |
+          terraform init
+          terraform validate
+          terraform plan
+          terraform apply -auto-approve
 
-        # - name: Configure AWS credentials
-        #   uses: aws-actions/configure-aws-credentials@v1
-        #   with:
-        #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-        #     aws-region: ${{ env.REGION_DEFAULT }}
-
-      # - name: Terraform Init
-      #   run: terraform init
-
-      # - name: Terraform Format
-      #   run: terraform fmt
-
-      # - name: Terraform Plan
-      #   run: terraform plan
-
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve
+      # Terraform destroy
+      - name: Terraform Destroy
+        if: always()
+        run: |
+          terraform destroy -auto-approve
