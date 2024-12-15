@@ -1,5 +1,5 @@
 resource "aws_db_instance" "rds_postgresql" {
-  identifier = "rds-lanchonete-tf"
+  identifier = "RDS-fiap-tech-challenge"
   allocated_storage    = 20
   max_allocated_storage = 100
   engine               = "postgres"
